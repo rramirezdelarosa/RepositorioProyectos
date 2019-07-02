@@ -119,9 +119,10 @@ public class FrmLogin extends javax.swing.JFrame {
         String clavedef=new String(clave);
 
         if (txtUsuario.getText().equals("readyfact") && clavedef.equals("12345")){
-            FrmSistema ventanaDos = new FrmSistema();
-            ventanaDos.setTitle("Proyecto ReadyFact");
-            ventanaDos.setVisible(true);
+            FrmSistema ventanaUno = new FrmSistema();
+            ventanaUno.setTitle("Proyecto ReadyFact");
+            ventanaUno.setVisible(true);
+            this.dispose();
         }else {
                JOptionPane.showMessageDialog(null, "Acceso denegado:\n"
                + "Por favor ingrese un usuario y/o contraseña correctos", "Acceso denegado",

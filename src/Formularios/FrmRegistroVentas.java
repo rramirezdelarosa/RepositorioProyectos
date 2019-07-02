@@ -220,10 +220,11 @@ public class FrmRegistroVentas extends javax.swing.JFrame {
         FrmSistema ventanaDos = new FrmSistema();
         ventanaDos.setTitle("Proyecto ReadyFact");
         ventanaDos.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        System.exit(0);
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

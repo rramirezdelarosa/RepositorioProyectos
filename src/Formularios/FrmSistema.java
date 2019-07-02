@@ -105,15 +105,17 @@ public class FrmSistema extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        FrmComprobantes ventanaTres = new FrmComprobantes();
-        ventanaTres.setTitle("Proyecto ReadyFact");
-        ventanaTres.setVisible(true);
+        FrmComprobantes ventanaDos = new FrmComprobantes();
+        ventanaDos.setTitle("Proyecto ReadyFact");
+        ventanaDos.setVisible(true);
+        this.dispose();        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        FrmRegistroVentas ventanaCuatro = new FrmRegistroVentas();
-        ventanaCuatro.setTitle("Proyecto ReadyFact");
-        ventanaCuatro.setVisible(true);
+        FrmRegistroVentas ventanaTres = new FrmRegistroVentas();
+        ventanaTres.setTitle("Proyecto ReadyFact");
+        ventanaTres.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
