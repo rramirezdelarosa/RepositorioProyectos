@@ -11,6 +11,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class FrmComprobantes extends javax.swing.JFrame {
 
+    Total total = new Total();
+    
     public FrmComprobantes() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -252,6 +254,19 @@ public class FrmComprobantes extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel15.setText("Total");
 
+        txtPrecioUnitario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPrecioUnitarioFocusLost(evt);
+            }
+        });
+
+        txtCantidad.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCantidadFocusLost(evt);
+            }
+        });
+
+        txtTotal.setEnabled(false);
         txtTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTotalActionPerformed(evt);
@@ -355,10 +370,7 @@ public class FrmComprobantes extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Cantidad", "Descripción", "Precio Unitario", "Total"
@@ -565,21 +577,52 @@ public class FrmComprobantes extends javax.swing.JFrame {
     private void txtDescripcionEnNumerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionEnNumerosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDescripcionEnNumerosActionPerformed
-
+    
+    public void desactivar(){
+    
+        if(jTabbedPane1.getSelectedIndex()==0){//DATOS
+            txtRuc.setEnabled(false);
+            txtRazonSocial.setEnabled(false);
+            txtDireccion.setEnabled(false);
+            txtCondicion.setEditable(false);
+            
+            dateEmision.setEnabled(false);
+            
+            
+            dateVencimiento.setEnabled(false);            
+        }
+        
+    }
+    
+    public void multiplicar(){
+        String strCantidad = txtCantidad.getText();
+        String strPrecio = txtPrecioUnitario.getText();
+        double cantidad = 0;
+        double precio = 0;
+        
+        if(!strCantidad.isEmpty()){
+            cantidad = Double.parseDouble(txtCantidad.getText());
+        }
+        
+        if(!strPrecio.isEmpty()){
+            precio = Double.parseDouble(txtPrecioUnitario.getText());
+        }
+        
+        txtTotal.setText( (cantidad * precio) + "" );
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        Datos datos = null;
         //Crea la factura
-        datos = new Datos();
         
-        Total total = null;
-        //Crea la factura
-        total = new Total();
-
-        if(jTabbedPane1.getSelectedIndex()==0){  
+                
+        System.out.println("indice => " + jTabbedPane1.getSelectedIndex());
+        if(jTabbedPane1.getSelectedIndex()==0){  //DATOS
            //Deshabilita el panel (Datos)
-           setPanelEnabled(jPanel3,false);
-
+           Datos datos  = new Datos();
+           //jPanel3.setEnabled(false);
+           //setPanelEnabled(jPanel3,false);
+           desactivar();
            //Se obtiene variables del panel (Datos)
            datos.setRuc(txtRuc.getText().toString());           
            datos.setRazonSocial(txtRazonSocial.getText().toString());
@@ -592,11 +635,15 @@ public class FrmComprobantes extends javax.swing.JFrame {
            lblDireccion.setText("Dirección        : "+txtDireccion.getText());
            lblRuc.setText("Número de RUC    : "+txtRuc.getText());
             
+           
+           total.setDatos(datos);
            //cambia 2da pestaña
            jTabbedPane1.setSelectedIndex(1);     
 
         }
-        else if(jTabbedPane1.getSelectedIndex()==1){
+        else if(jTabbedPane1.getSelectedIndex()==1){ //DETALLE
+            
+            
             //Crea el detalle de la factura.
             Detalle detalle1 = new Detalle();
             detalle1.setCantidad(Integer.parseInt(txtCantidad.getText().toString()));            
@@ -605,9 +652,10 @@ public class FrmComprobantes extends javax.swing.JFrame {
             detalle1.setTotal(Double.parseDouble(txtTotal.getText().toString()));
             
             //Agrega cada detalle a factura.
-            List<Detalle> df = new ArrayList<Detalle>();
-            df.add(detalle1);
-            total.setDetalle(df);
+            //List<Detalle> df = new ArrayList<Detalle>();
+            //df.add(detalle1);
+            total.getDetalle().add(detalle1);
+            //total.setDetalle(df);
            
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             
@@ -616,41 +664,28 @@ public class FrmComprobantes extends javax.swing.JFrame {
             model.addRow(row1);
             
             //Calcula totales
-            total.setTotal(detalle1.getTotal());
-            total.setIgv(total.getTotal()*0.18);
-            total.setSubtotal(total.getTotal()-total.getIgv());
+            //total.setTotal(detalle1.getTotal());
+            //total.setIgv(total.getTotal()*0.18);
+            //total.setSubtotal(total.getTotal()-total.getIgv());
             
-            txtDescripcionEnNumeros.setText("Son "+ total.getTotal()+" nuevos soles.");
+            
+            total.calcular();
+            
+            txtDescripcionEnNumeros.setText("Son "+ total.getTotal()+"  nuevos soles.");
             lblSubTotal.setText(String.valueOf(total.getSubtotal()));
             lblIgv.setText(String.valueOf(total.getIgv()));
             lblTotal.setText(String.valueOf(total.getTotal()));
 
            //Deshabilita el 2do panel 
-            setPanelEnabled(jPanel4,false);
+           jPanel4.setEnabled(false);
+           
+            //setPanelEnabled(jPanel4,false);
             
             //cambia a la 3ra pestaña
             jTabbedPane1.setSelectedIndex(2);                
         } 
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    /**
-     * Deshabilita los componentes dentro de un JPanel
-     * @param panel
-     * @param isEnabled 
-     */
-    void setPanelEnabled(JPanel panel, Boolean isEnabled) {
-    panel.setEnabled(isEnabled);
-
-    Component[] components = panel.getComponents();
-
-    for(int i = 0; i < components.length; i++) {
-        if(components[i].getClass().getName() == "javax.swing.JPanel") {
-            setPanelEnabled((JPanel) components[i], isEnabled);
-        }
-
-        components[i].setEnabled(isEnabled);
-    }
-}      
+  
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -660,8 +695,21 @@ public class FrmComprobantes extends javax.swing.JFrame {
         FrmSistema ventanaCuatro = new FrmSistema();
         ventanaCuatro.setTitle("Proyecto ReadyFact");
         ventanaCuatro.setVisible(true);
+        ventanaCuatro.setTotal(this.total);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtPrecioUnitarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPrecioUnitarioFocusLost
+        // TODO add your handling code here:
+        System.out.println("precio evento fire lost");
+        multiplicar();
+    }//GEN-LAST:event_txtPrecioUnitarioFocusLost
+
+    private void txtCantidadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCantidadFocusLost
+        // TODO add your handling code here:
+        System.out.println("cantidad evento fire lost");
+        multiplicar();
+    }//GEN-LAST:event_txtCantidadFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> combo;

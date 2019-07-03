@@ -1,7 +1,17 @@
 package Formularios;
 
+import Clases.Detalle;
+import Clases.Total;
+import javax.swing.table.DefaultTableModel;
+
 public class FrmRegistroVentas extends javax.swing.JFrame {
 
+    Total total = new Total();
+    
+    public void setTotal(Total total){
+        this.total = total;
+    }
+    
     public FrmRegistroVentas() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -24,7 +34,7 @@ public class FrmRegistroVentas extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtNumeroComprobante = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
 
@@ -88,16 +98,7 @@ public class FrmRegistroVentas extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Tipo Documento", "Numero Comprobante", "Fecha Emisión", "Fecha Vencimiento", "Base Importe", "Igv", "Total", "Estado", "Sustento"
@@ -133,9 +134,9 @@ public class FrmRegistroVentas extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtNumeroComprobante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtNumeroComprobanteActionPerformed(evt);
             }
         });
 
@@ -162,7 +163,7 @@ public class FrmRegistroVentas extends javax.swing.JFrame {
                                 .addGap(51, 51, 51)
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtNumeroComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(57, 57, 57)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
@@ -184,7 +185,7 @@ public class FrmRegistroVentas extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNumeroComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -232,12 +233,26 @@ public class FrmRegistroVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        
+        if(!this.txtNumeroComprobante.getText().isEmpty() ){
+            System.out.println("ruc => " + total.getDatos().getRuc() + "  - " + total.getDatos().getRuc().length());
+            if(total.getDatos().getRuc().equals(txtNumeroComprobante.getText())){
+                
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                
+                Object[] row1 = { total.getDatos().getRuc(),"","","","","","","","" };
+            
+                model.addRow(row1);
+            }                    
+        }
+        
+        
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtNumeroComprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroComprobanteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtNumeroComprobanteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -253,8 +268,8 @@ public class FrmRegistroVentas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField txtNumeroComprobante;
     // End of variables declaration//GEN-END:variables
 }

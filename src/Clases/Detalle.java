@@ -4,7 +4,9 @@ public class Detalle {
     private int cantidad;
     private String descripcion;
     private double precioUnitario;
-    private double total;   
+    private double total; 
+    
+    
 
     public int getCantidad() {
         return cantidad;

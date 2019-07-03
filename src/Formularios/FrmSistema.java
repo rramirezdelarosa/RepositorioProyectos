@@ -1,7 +1,15 @@
 package Formularios;
 
+import Clases.Total;
+
 public class FrmSistema extends javax.swing.JFrame {
 
+    Total total = new Total();
+    
+    public void setTotal(Total total){
+        this.total = total;
+    }
+    
     public FrmSistema() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -115,6 +123,11 @@ public class FrmSistema extends javax.swing.JFrame {
         FrmRegistroVentas ventanaTres = new FrmRegistroVentas();
         ventanaTres.setTitle("Proyecto ReadyFact");
         ventanaTres.setVisible(true);
+        ventanaTres.setTotal(this.total);
+        
+        System.out.println("total : " + this.total.getTotal());        
+        System.out.println("elementos: " + this.total.getDetalle().size());
+        
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
